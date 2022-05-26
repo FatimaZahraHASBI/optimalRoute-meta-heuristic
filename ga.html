@@ -1,0 +1,238 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyB2Zn8qf1kw0a0KgAA8_EW6okxAlijDbHY"></script>
+  <script src="jquery.min.js" type="text/javascript"></script>
+
+
+  <script src="js/ga.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://bootswatch.com/5/flatly/bootstrap.min.css">
+
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="css/bootstrap.min.css"></script>
+</head>
+<body>
+  <style>
+    .div_cover {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    .div_map {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    .div_info {
+      position: absolute;
+      width: 100%;
+      background: #fff;
+      height: 100%;
+    }
+
+    .div_r {
+      position: relative;
+      height: 100%;
+    }
+
+    .row {
+      height: 100%;
+    }
+
+    @media only screen and (max-device-width: 900px) {
+
+      /* Change to whatever media query you require */
+      .div_r {
+        position: absolute;
+        top: 0;
+      }
+    }
+  </style>
+
+  <div class="div_cover" >
+    <div class="hr vpad"></div>
+    <div class="row" >
+      <div class="div_r col-3">
+        <div class="div_info ">
+          <h3 style="margin-left: 75px; margin-top: 15px"><b>Chemin optimal</b></h3>
+          <hr />
+          <div id="ga-buttons" style="margin-left: 90px">
+            <button class="btn btn-info" id="find-route">Commencer</button>
+            <button class="btn btn-warning" id="clear-map">Effacer</button>
+          </div>
+          <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title" style="margin-top: 20px; text-align: center">
+                  <a data-toggle="collapse" style=" display:block;" data-parent="#accordion" href="#collapseOne"
+                    aria-expanded="true" aria-controls="collapseOne">
+                    Paramètres de <br>l'algorithme génétique
+                  </a>
+                </h4>
+              </div>
+              <div>
+                <div class="p-5 pt-3">
+                  <table class="table-striped-columns">
+                    <tr class="">
+                      <td>Mode de voyage: </td>
+                      <td>
+                        <select id="travel-type" class="form-select">
+                          <option value="DRIVING">Voiture</option>
+                          <option value="BICYCLING">Bicyclette</option>
+                          <option value="WALKING">Sur Pied</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Utiliser les autoroutes</td>
+                      <td>
+                        <select id="avoid-highways" class="form-select">
+                          <option value="1">Oui</option>
+                          <option value="0" selected="selected">Non</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Population: </td>
+                      <td>
+                        <select id="population-size" class="form-select">
+                          <option value="5">5</option>
+                          <option value="10">10</option>
+                          <option value="20">20</option>
+                          <option value="50" selected="selected">50</option>
+                          <option value="100">100</option>
+                          <option value="200">200</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Taux de mutation </td>
+                      <td>
+                        <select id="mutation-rate" class="form-select">
+                          <option value="0.00">0.00</option>
+                          <option value="0.05">0.01</option>
+                          <option value="0.05">0.05</option>
+                          <option value="0.1" selected="selected">0.1</option>
+                          <option value="0.2">0.2</option>
+                          <option value="0.4">0.4</option>
+                          <option value="0.7">0.7</option>
+                          <option value="1">1.0</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Croisement : </td>
+                      <td>
+                        <select id="crossover-rate" class="form-select">
+                          <option value="0.0">0.0</option>
+                          <option value="0.1">0.1</option>
+                          <option value="0.2">0.2</option>
+                          <option value="0.3">0.3</option>
+                          <option value="0.4">0.4</option>
+                          <option value="0.5" selected="selected">0.5</option>
+                          <option value="0.6">0.6</option>
+                          <option value="0.7">0.7</option>
+                          <option value="0.8">0.8</option>
+                          <option value="0.9">0.9</option>
+                          <option value="1">1.0</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Choix élitiste </td>
+                      <td>
+                        <select id="elitism" class="form-select">
+                          <option value="1" selected="selected">Ouvrir</option>
+                          <option value="0">Fermé</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Génération maximale: </td>
+                      <td>
+                        <select id="generations" class="form-select">
+                          <option value="20">20</option>
+                          <option value="50" selected="selected">50</option>
+                          <option value="100">100</option>
+                        </select>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="2"><b>Debug Info</b></td>
+                    </tr>
+                    <tr>
+                      <td>Nombre de cibles: </td>
+                      <td id="destinations-count">0</td>
+                    </tr>
+                    <tr class="ga-info" style="display:none;">
+                      <td>Génération: </td>
+                      <td id="generations-passed">0</td>
+                    </tr>
+                    <tr class="ga-info" style="display:none;">
+                      <td>Chemin le plus court: </td>
+                      <td id="best-time">?</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title" style="text-align: center">
+                  <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo"
+                    aria-expanded="false" aria-controls="collapseTwo">
+                    Historique des générations
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                  <div style="max-height:400px; overflow:scroll;" class="list-group"><span id="routeadd"></span></div>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading" role="tab" id="headingThree">
+                <h4 class="panel-title" style="text-align: center">
+                  <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree"
+                    aria-expanded="false" aria-controls="collapseThree">
+                    Ajoutez l'adresse
+                  </a>
+                </h4>
+              </div>
+              <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div class="panel-body">
+                  <input type="text" id="txt_konum" class="form-control" placeholder="Entrer l'adresse" /><br />
+                  <button class="btn btn-primary" class="form-control">Ajouter</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+      </div>
+      <div class="div_r col-9">
+        <div id="map-canvas" class="div_map"></div>
+      </div>
+
+    </div>
+
+  </div>
+</body>
+
+</html>
