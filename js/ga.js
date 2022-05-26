@@ -14,7 +14,7 @@ function initializeMap() {
   // Réglage de la carte
   var opts = {
     center: new google.maps.LatLng(33.589886, -7.603869),
-    zoom: 8,
+    zoom: 12,
     streetViewControl: false,
     mapTypeControl: false,
   };
