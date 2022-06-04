@@ -13,8 +13,8 @@ var distances = [];
 function initializeMap() {
   // Réglage de la carte
   var opts = {
-    center: new google.maps.LatLng(33.589886, -7.603869),
-    zoom: 12,
+    center: new google.maps.LatLng(34, -6),
+    zoom: 7.5,
     streetViewControl: false,
     mapTypeControl: false,
   };
@@ -527,7 +527,7 @@ $(document).ready(function () {
               }
               $("#best-time").html(
                 $("#best-time").html() +
-                  ((tDuration / 3600).toFixed(2) + " Heure")
+                  ("<br>"+ (tDuration / 3600).toFixed(2) + " Heures")
               );
               // alert(legs.length);
               //showSteps(response);
